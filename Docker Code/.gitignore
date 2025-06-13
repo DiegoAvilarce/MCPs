@@ -1,0 +1,10 @@
+# Archivos de entorno con credenciales
+.env
+
+# Datos de volúmenes de Docker
+postgres_data/
+cloudbeaver_data/
+
+# Archivos temporales
+*.tmp
+*.log
