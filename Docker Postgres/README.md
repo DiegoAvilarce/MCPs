@@ -1,142 +1,291 @@
 # Docker PostgreSQL + CloudBeaver Setup
 
-Este directorio configura un entorno de desarrollo completo con PostgreSQL y CloudBeaver usando Docker Compose, con variables de entorno centralizadas para máxima flexibilidad.
+Este directorio configura un entorno de desarrollo profesional y completo con PostgreSQL 15 y CloudBeaver usando Docker Compose, optimizado para desarrollo de aplicaciones MCP con variables de entorno centralizadas para máxima flexibilidad y seguridad.
 
 ## 🚀 Servicios Incluidos
 
-- **PostgreSQL 15**: Base de datos principal con persistencia de datos
-- **CloudBeaver**: Interfaz web moderna para administrar la base de datos
-- **Red dedicada**: Comunicación segura entre contenedores
+- **PostgreSQL 15**: Base de datos principal enterprise-ready con persistencia automática
+- **CloudBeaver**: Interfaz web moderna y profesional para administración de bases de datos
+- **Red dedicada**: Comunicación segura y aislada entre contenedores
+- **Configuración preestablecida**: Data sources y conexiones automáticas
 
-## 📋 Variables de Entorno
+## 📋 Variables de Entorno Centralizadas
 
-El archivo `.env` contiene todas las configuraciones necesarias:
+El archivo `.env` contiene todas las configuraciones necesarias para un despliegue flexible:
 
 ```env
 # Configuración de PostgreSQL
-POSTGRES_DB=bd_davila          # Nombre de la base de datos
-POSTGRES_USER=davila           # Usuario de PostgreSQL
-POSTGRES_PASSWORD=cramer*69    # Contraseña de PostgreSQL
-POSTGRES_HOST=postgres         # Host del servidor PostgreSQL
+POSTGRES_DB=bd_davila          # Nombre de la base de datos principal
+POSTGRES_USER=davila           # Usuario administrador de PostgreSQL
+POSTGRES_PASSWORD=cramer*69    # Contraseña segura de PostgreSQL
+POSTGRES_HOST=postgres         # Host del servidor PostgreSQL (para contenedores)
 
 # Configuración de CloudBeaver
 CB_ADMIN_NAME=davila           # Usuario administrador de CloudBeaver
-CB_ADMIN_PASSWORD=Davila_admin*69  # Contraseña del administrador
+CB_ADMIN_PASSWORD=Davila_admin*69  # Contraseña del administrador web
 ```
 
-## 🛠️ Configuración Inicial
+## 🛠️ Prerrequisitos y Configuración
 
-1. **Verifica que tienes Docker instalado**:
-   ```bash
-   docker --version
-   docker-compose --version
-   ```
-
-2. **Personaliza las variables de entorno**:
-   Edita el archivo `.env` con tus credenciales preferidas (especialmente las contraseñas)
-
-## 🔧 Uso
-
-### Iniciar el entorno completo
+### 1. Verificar Docker
 ```bash
+docker --version
+docker-compose --version
+```
+
+### 2. Personalizar Configuración
+Edita el archivo `.env` con tus credenciales específicas:
+- ⚠️ **Importante**: Cambia las contraseñas por defecto en entornos de producción
+- ✅ Mantén credenciales consistentes entre servicios
+- 🔒 Nunca versiones el archivo `.env` con credenciales reales
+
+## 🚀 Gestión del Entorno
+
+### Inicialización Completa
+```bash
+# Construir e iniciar todos los servicios
 docker-compose up -d
-```
 
-### Verificar que los servicios están ejecutándose
-```bash
+# Verificar que todo está funcionando
 docker-compose ps
 ```
 
-### Ver logs de los servicios
+### Monitoreo y Logs
 ```bash
-# Todos los servicios
-docker-compose logs
+# Ver estado de todos los servicios
+docker-compose ps
 
-# Solo PostgreSQL
+# Logs en tiempo real (todos los servicios)
+docker-compose logs -f
+
+# Logs específicos por servicio
 docker-compose logs postgres
-
-# Solo CloudBeaver
 docker-compose logs cloudbeaver
+
+# Ver últimas 50 líneas de logs
+docker-compose logs --tail=50
 ```
 
-### Acceder a CloudBeaver
-- **URL**: http://localhost:8978
-- **Usuario**: El definido en `CB_ADMIN_NAME`
-- **Contraseña**: La definida en `CB_ADMIN_PASSWORD`
-
-### Conexión preconfigurada a PostgreSQL
-CloudBeaver viene con una conexión preconfigurada llamada "PostgreSQL Database" que usa todas las variables de entorno automáticamente.
-
-### Detener los servicios
+### Gestión de Servicios
 ```bash
+# Reiniciar servicios específicos
+docker-compose restart postgres
+docker-compose restart cloudbeaver
+
+# Detener servicios manteniendo datos
+docker-compose stop
+
+# Iniciar servicios previamente detenidos
+docker-compose start
+
+# Parada completa
 docker-compose down
 ```
 
-### Reiniciar los servicios
+### Limpieza y Mantenimiento
 ```bash
+# Eliminar contenedores (mantiene volúmenes)
+docker-compose down
+
+# ⚠️ PELIGRO: Eliminar TODO incluyendo datos
+docker-compose down -v
+
+# Reconstruir imágenes si hay cambios
+docker-compose up -d --build
+```
+
+## 🌐 Acceso a Servicios
+
+### CloudBeaver Web Interface
+- **URL**: http://localhost:8978
+- **Usuario**: Valor de `CB_ADMIN_NAME` en `.env`
+- **Contraseña**: Valor de `CB_ADMIN_PASSWORD` en `.env`
+- **Conexión automática**: La conexión a PostgreSQL se configura automáticamente
+
+### PostgreSQL Direct Access
+- **Host**: localhost
+- **Puerto**: 5432
+- **Base de datos**: Valor de `POSTGRES_DB` en `.env`
+- **Usuario**: Valor de `POSTGRES_USER` en `.env`
+- **Contraseña**: Valor de `POSTGRES_PASSWORD` en `.env`
+
+## 📊 Arquitectura y Puertos
+
+| Servicio | Puerto Host | Puerto Contenedor | Descripción | Acceso |
+|----------|-------------|-------------------|-------------|---------|
+| PostgreSQL | 5432 | 5432 | Base de datos principal | Directo/Apps |
+| CloudBeaver | 8978 | 8978 | Interfaz web admin | Browser |
+
+## 💾 Persistencia de Datos
+
+### Volúmenes Docker
+- **postgres_data**: 
+  - Almacena toda la información de la base de datos
+  - Persiste entre reinicios de contenedores
+  - Ubicación: Docker volume management
+  
+- **cloudbeaver_data**: 
+  - Configuraciones de CloudBeaver
+  - Workspace y preferencias del usuario
+  - Conexiones guardadas
+
+### Backup y Restauración
+```bash
+# Backup de la base de datos
+docker-compose exec postgres pg_dump -U davila bd_davila > backup_$(date +%Y%m%d).sql
+
+# Restaurar desde backup
+docker-compose exec -T postgres psql -U davila bd_davila < backup_file.sql
+```
+
+## ⚙️ Configuración Avanzada
+
+### Personalizar Puertos
+Modifica `docker-compose.yml` para cambiar puertos:
+```yaml
+services:
+  postgres:
+    ports:
+      - "5433:5432"  # Cambiar puerto PostgreSQL
+  cloudbeaver:
+    ports:
+      - "8080:8978"  # Cambiar puerto CloudBeaver
+```
+
+### Variables de Entorno Adicionales
+```env
+# Configuraciones adicionales PostgreSQL
+POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
+
+# Configuraciones CloudBeaver
+CB_WORKSPACE=/opt/cloudbeaver/workspace
+```
+
+### Data Sources Preconfigurados
+El archivo `data-sources.json` incluye:
+- Conexión automática a PostgreSQL
+- Configuración de drivers
+- Parámetros de conexión optimizados
+
+## 🔐 Seguridad y Mejores Prácticas
+
+### Configuración de Seguridad
+- ✅ Archivo `.env` excluido del control de versiones
+- ✅ Red Docker aislada (`db_network`)
+- ✅ Acceso por credenciales únicamente
+- ✅ Variables de entorno para configuración sensible
+
+### Recomendaciones de Producción
+```env
+# Usar contraseñas complejas
+POSTGRES_PASSWORD=Tu_Password_Complejo_123!
+CB_ADMIN_PASSWORD=Admin_Password_Seguro_456!
+
+# Considerar certificados SSL
+# Configurar firewalls apropiados
+# Implementar backup automático
+```
+
+## 🔧 Solución de Problemas
+
+### Problemas Comunes
+
+#### CloudBeaver no se conecta a PostgreSQL
+```bash
+# 1. Verificar que ambos contenedores estén running
+docker-compose ps
+
+# 2. Revisar logs de conexión
+docker-compose logs cloudbeaver
+
+# 3. Verificar variables de entorno
+cat .env
+
+# 4. Reiniciar servicios
 docker-compose restart
 ```
 
-### Eliminar volúmenes (⚠️ **¡CUIDADO! Esto borra todos los datos permanentemente!**)
+#### Puerto ya en uso
 ```bash
-docker-compose down -v
+# Verificar qué proceso usa el puerto
+netstat -tulpn | grep :5432
+netstat -tulpn | grep :8978
+
+# Cambiar puertos en docker-compose.yml si es necesario
 ```
 
-## 🌐 Puertos Expuestos
-
-| Servicio | Puerto Host | Puerto Contenedor | Descripción |
-|----------|-------------|-------------------|-------------|
-| PostgreSQL | 5432 | 5432 | Acceso directo a la BD |
-| CloudBeaver | 8978 | 8978 | Interfaz web de administración |
-
-## 📁 Volúmenes Persistentes
-
-- **postgres_data**: Almacena los datos de PostgreSQL
-- **cloudbeaver_data**: Configuraciones y workspace de CloudBeaver
-
-## 🔧 Configuración Avanzada
-
-### Personalizar el puerto de CloudBeaver
-Cambia el puerto en `docker-compose.yml`:
-```yaml
-ports:
-  - "8080:8978"  # Cambia 8978 por el puerto que prefieras
-```
-
-### Acceso externo a PostgreSQL
-La base está disponible en `localhost:5432` con las credenciales del `.env`
-
-### Configuración personalizada de CloudBeaver
-El archivo `cloudbeaver-config.json` contiene la configuración inicial y conexiones preconfiguradas.
-
-## 🔒 Seguridad
-
-- ✅ El archivo `.env` debe estar excluido del control de versiones
-- ✅ Usa contraseñas seguras para entornos de producción
-- ✅ Las variables `POSTGRES_HOST` permiten flexibilidad en el despliegue
-- ✅ La red `db_network` aísla los contenedores
-
-## 🐛 Solución de Problemas
-
-### CloudBeaver no se conecta a PostgreSQL
-1. Verifica que ambos contenedores estén ejecutándose: `docker-compose ps`
-2. Revisa los logs: `docker-compose logs`
-3. Confirma que las variables de entorno están correctas en `.env`
-
-### Error de permisos en PostgreSQL
+#### Problemas de permisos
 ```bash
 # Recrear volúmenes con permisos correctos
 docker-compose down -v
+docker volume prune
 docker-compose up -d
 ```
 
-### Puerto ocupado
-Si el puerto 8978 o 5432 están ocupados, cámbialos en `docker-compose.yml`
+#### Base de datos corrupta
+```bash
+# Backup de emergencia
+docker-compose exec postgres pg_dumpall -U davila > emergency_backup.sql
 
-## 📈 Próximos Pasos
+# Recrear contenedor
+docker-compose down
+docker volume rm postgres_data
+docker-compose up -d
+```
 
-Una vez que tengas el entorno funcionando:
-1. Crea tus primeras tablas en PostgreSQL
-2. Explora las funcionalidades de CloudBeaver
-3. Conecta aplicaciones externas usando las credenciales del `.env`
-4. Considera configurar backups automáticos para producción
+## 📈 Desarrollo y Integración
+
+### Conectar Aplicaciones Externas
+```python
+# Ejemplo Python con psycopg2
+import psycopg2
+
+conn = psycopg2.connect(
+    host="localhost",
+    port=5432,
+    database="bd_davila",
+    user="davila",
+    password="cramer*69"
+)
+```
+
+### Integración con MCP Servers
+- Base de datos lista para aplicaciones MCP
+- Variables de entorno compatibles
+- Red Docker para microservicios
+
+### Próximos Pasos
+1. **Crear esquemas** específicos para tus aplicaciones
+2. **Configurar usuarios** adicionales con permisos específicos
+3. **Implementar backup** automático programado
+4. **Monitorear performance** con CloudBeaver
+5. **Escalar horizontalmente** si es necesario
+
+## 📚 Recursos Adicionales
+
+### Documentación
+- [PostgreSQL 15 Documentation](https://www.postgresql.org/docs/15/)
+- [CloudBeaver Documentation](https://cloudbeaver.io/docs/)
+- [Docker Compose Reference](https://docs.docker.com/compose/)
+
+### Comandos Útiles PostgreSQL
+```sql
+-- Ver todas las bases de datos
+\l
+
+-- Conectar a una base específica
+\c bd_davila
+
+-- Ver todas las tablas
+\dt
+
+-- Describir una tabla
+\d nombre_tabla
+```
+
+---
+
+**Entorno optimizado para**: Desarrollo MCP, Análisis de datos, Aplicaciones web  
+**Última actualización**: Junio 2025  
+**Versión**: 2.1  
+**Compatibilidad**: Docker 20+, Docker Compose 2+
