@@ -1,10 +1,46 @@
 # MCPs Project
 
-Este es un proyecto de Model Context Protocol (MCP) servers.
+Este es un proyecto de Model Context Protocol (MCP) servers con funcionalidades de consulta de tiempo y GitHub.
 
 ## Descripción
 
-Este repositorio contiene implementaciones de servidores MCP para diferentes casos de uso.
+Este repositorio contiene implementaciones de servidores MCP para diferentes casos de uso, incluyendo:
+
+- **Funciones de Tiempo**: Consulta de hora actual y conversión entre zonas horarias
+- **Integración con GitHub**: Gestión de repositorios, issues, pull requests y más
+- **Ejemplos prácticos**: Notebook Jupyter con demostraciones de uso
+
+## Características
+
+### 🕐 Funciones de Tiempo
+- Consulta de hora actual en cualquier zona horaria mundial
+- Conversión de horarios entre diferentes zonas horarias
+- Soporte para formato IANA timezone (ej: 'America/Sao_Paulo', 'Europe/London')
+
+### 🐙 Integración con GitHub
+- Crear y gestionar repositorios
+- Manejar issues y pull requests
+- Búsqueda de código y repositorios
+- Gestión de archivos y commits
+
+## Archivos del Proyecto
+
+- `prueba.ipynb`: Notebook con ejemplos de uso de las funciones MCP de tiempo
+- `README.md`: Documentación del proyecto
+
+## Ejemplos de Uso
+
+### Consulta de Hora
+```
+Consultar hora actual en Brasil (São Paulo): 9:51 AM, 13 de junio de 2025
+Zona horaria: America/Sao_Paulo (UTC-3)
+```
+
+### Zonas Horarias Soportadas en Brasil
+- **America/Sao_Paulo** - Región Sudeste y Sur (UTC-3)
+- **America/Manaus** - Región Amazónica (UTC-4)
+- **America/Fortaleza** - Región Nordeste (UTC-3)
+- **America/Noronha** - Fernando de Noronha (UTC-2)
 
 ## Instalación
 
