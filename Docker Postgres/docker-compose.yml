@@ -25,7 +25,7 @@ services:
       - "8978:8978"
     volumes:
       - cloudbeaver_data:/opt/cloudbeaver/workspace
-      - ./cloudbeaver-config.json:/opt/cloudbeaver/conf/initial-data.conf
+      - ./data-sources.json:/opt/cloudbeaver/conf/data-sources.json
     environment:
       CB_ADMIN_NAME: ${CB_ADMIN_NAME}
       CB_ADMIN_PASSWORD: ${CB_ADMIN_PASSWORD}

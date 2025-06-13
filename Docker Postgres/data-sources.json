@@ -1,0 +1,44 @@
+{
+  "folders": {},
+  "connections": [
+    {
+      "id": "postgres-default",
+      "provider": "postgresql",
+      "driver": "postgres-jdbc",
+      "name": "PostgreSQL - ${POSTGRES_DB}",
+      "description": "Conexión predeterminada a PostgreSQL",
+      "configuration": {
+        "host": "${POSTGRES_HOST}",
+        "port": "5432",
+        "database": "${POSTGRES_DB}",
+        "url": "jdbc:postgresql://${POSTGRES_HOST}:5432/${POSTGRES_DB}",
+        "properties": {
+          "connectTimeout": "20",
+          "loginTimeout": "20",
+          "isolation-level": "TRANSACTION_READ_COMMITTED"
+        },
+        "providerProperties": {
+          "postgresql.dd.plain.string": "false",
+          "postgresql.dd.tag.string": "false"
+        }
+      },
+      "credentials": {
+        "user": "${POSTGRES_USER}",
+        "password": "${POSTGRES_PASSWORD}"
+      },
+      "features": [
+        "supportsLimits",
+        "supportsOrderBy",
+        "supportsSubqueries",
+        "supportsTransactions"
+      ],
+      "auth-model": "native",
+      "save-password": true,
+      "template": false,
+      "connected": false,
+      "provided": true,
+      "useUrl": true
+    }
+  ],
+  "version": 1
+}
