@@ -25,9 +25,14 @@ services:
       - "8978:8978"
     volumes:
       - cloudbeaver_data:/opt/cloudbeaver/workspace
+      - ./cloudbeaver-config.json:/opt/cloudbeaver/conf/initial-data.conf
     environment:
       CB_ADMIN_NAME: ${CB_ADMIN_NAME}
       CB_ADMIN_PASSWORD: ${CB_ADMIN_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST: ${POSTGRES_HOST}
     depends_on:
       - postgres
     networks:

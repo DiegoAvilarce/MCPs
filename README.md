@@ -1,6 +1,6 @@
 # MCPs Project
 
-Este es un proyecto de Model Context Protocol (MCP) servers con funcionalidades de consulta de tiempo, GitHub y contenido literario.
+Este es un proyecto de Model Context Protocol (MCP) servers con funcionalidades de consulta de tiempo, GitHub y contenido literario, además de un entorno Docker para bases de datos.
 
 ## Descripción
 
@@ -9,7 +9,22 @@ Este repositorio contiene implementaciones de servidores MCP para diferentes cas
 - **Funciones de Tiempo**: Consulta de hora actual y conversión entre zonas horarias
 - **Integración con GitHub**: Gestión de repositorios, issues, pull requests y más
 - **Contenido Literario**: Resúmenes y análisis de obras literarias
+- **Entorno Docker**: Configuración PostgreSQL + CloudBeaver para desarrollo
 - **Ejemplos prácticos**: Notebook Jupyter con demostraciones de uso
+
+## Estructura del Proyecto
+
+```
+MCPs/
+├── harry_potter_resumen.md    # Resumen de Harry Potter
+├── prueba.ipynb              # Notebook con ejemplos MCP
+├── README.md                 # Este archivo
+└── Docker Code/              # Entorno de base de datos
+    ├── docker-compose.yml    # Configuración Docker
+    ├── cloudbeaver-config.json # Configuración CloudBeaver
+    ├── .env                  # Variables de entorno
+    └── README.md             # Documentación específica Docker
+```
 
 ## Características
 
@@ -29,37 +44,40 @@ Este repositorio contiene implementaciones de servidores MCP para diferentes cas
 - Análisis de personajes y temas principales
 - Datos curiosos e impacto cultural
 
-## Archivos del Proyecto
+### 🐳 Entorno Docker
+- PostgreSQL 15 preconfigurado
+- CloudBeaver para administración web
+- Variables de entorno centralizadas
+- Configuración flexible con `.env`
 
-- `prueba.ipynb`: Notebook con ejemplos de uso de las funciones MCP de tiempo
-- `harry_potter_resumen.md`: Resumen completo de "Harry Potter y la Piedra Filosofal" por J.K. Rowling
-- `README.md`: Documentación del proyecto
+## Inicio Rápido
 
-## Ejemplos de Uso
-
-### Consulta de Hora
+### 1. Configurar entorno Docker (opcional)
+```bash
+cd "Docker Code"
+# Configurar variables de entorno en .env
+docker-compose up -d
 ```
-Consultar hora actual en Brasil (São Paulo): 9:51 AM, 13 de junio de 2025
-Zona horaria: America/Sao_Paulo (UTC-3)
-```
 
-### Zonas Horarias Soportadas en Brasil
+### 2. Explorar ejemplos
+Abre `prueba.ipynb` en Jupyter para ver ejemplos de las funciones MCP de tiempo.
+
+### 3. Consultar contenido literario
+Revisa `harry_potter_resumen.md` para ver un ejemplo de análisis literario detallado.
+
+## Zonas Horarias Soportadas en Brasil
 - **America/Sao_Paulo** - Región Sudeste y Sur (UTC-3)
 - **America/Manaus** - Región Amazónica (UTC-4)
 - **America/Fortaleza** - Región Nordeste (UTC-3)
 - **America/Noronha** - Fernando de Noronha (UTC-2)
 
-## Instalación
+## Tecnologías Utilizadas
 
-```bash
-# Instrucciones de instalación aquí
-```
-
-## Uso
-
-```bash
-# Instrucciones de uso aquí
-```
+- **Model Context Protocol (MCP)**: Para funcionalidades de tiempo y GitHub
+- **Docker & Docker Compose**: Containerización
+- **PostgreSQL 15**: Base de datos
+- **CloudBeaver**: Interfaz web para BD
+- **Jupyter Notebook**: Documentación interactiva
 
 ## Contribución
 
