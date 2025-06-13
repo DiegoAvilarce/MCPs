@@ -73,20 +73,6 @@ docker-compose ps
 - Integra con GitHub para automatización de workflows
 - Procesa contenido para análisis y documentación
 
-## Zonas Horarias Soportadas
-
-### Brasil (Completo)
-- **America/Sao_Paulo** - Brasília, São Paulo, Rio (UTC-3)
-- **America/Manaus** - Amazonas, Roraima (UTC-4)
-- **America/Fortaleza** - Ceará, Nordeste (UTC-3)
-- **America/Noronha** - Fernando de Noronha (UTC-2)
-
-### Global (Ejemplos)
-- **America/New_York** - Costa Este EE.UU.
-- **Europe/London** - Reino Unido
-- **Asia/Tokyo** - Japón
-- **Australia/Sydney** - Australia Oriental
-
 ## Stack Tecnológico
 
 - **Model Context Protocol (MCP)**: Framework para funcionalidades avanzadas
