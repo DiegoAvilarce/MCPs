@@ -1,6 +1,6 @@
 # MCPs Project
 
-Este es un proyecto de Model Context Protocol (MCP) servers con funcionalidades de consulta de tiempo y GitHub.
+Este es un proyecto de Model Context Protocol (MCP) servers con funcionalidades de consulta de tiempo, GitHub y contenido literario.
 
 ## Descripción
 
@@ -8,6 +8,7 @@ Este repositorio contiene implementaciones de servidores MCP para diferentes cas
 
 - **Funciones de Tiempo**: Consulta de hora actual y conversión entre zonas horarias
 - **Integración con GitHub**: Gestión de repositorios, issues, pull requests y más
+- **Contenido Literario**: Resúmenes y análisis de obras literarias
 - **Ejemplos prácticos**: Notebook Jupyter con demostraciones de uso
 
 ## Características
@@ -23,9 +24,15 @@ Este repositorio contiene implementaciones de servidores MCP para diferentes cas
 - Búsqueda de código y repositorios
 - Gestión de archivos y commits
 
+### 📚 Contenido Literario
+- Resúmenes detallados de obras clásicas
+- Análisis de personajes y temas principales
+- Datos curiosos e impacto cultural
+
 ## Archivos del Proyecto
 
 - `prueba.ipynb`: Notebook con ejemplos de uso de las funciones MCP de tiempo
+- `harry_potter_resumen.md`: Resumen completo de "Harry Potter y la Piedra Filosofal" por J.K. Rowling
 - `README.md`: Documentación del proyecto
 
 ## Ejemplos de Uso
